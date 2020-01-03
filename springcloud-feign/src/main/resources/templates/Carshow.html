@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap3/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap3/css/bootstrap.css"/>
+
+    <script src="../js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap-treeview/bootstrap-treeview.min.css"/>
+
+    <script src="../js/bootStrap-addTabs/bootstrap.addtabs.js"></script>
+    <link rel="stylesheet" href="../js/bootStrap-addTabs/bootstrap.addtabs.css"/>
+
+    <script src="../js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../js/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap-table/bootstrap-table.css"/>
+
+    <style type="text/css">
+        .row {
+            margin-bottom: 10px
+        }
+    </style>
+</head>
+<body>
+
+<!--导航条开始-->
+<nav class="navbar " >
+
+    <!--搜索框-->
+    <form class="navbar-form navbar-left">
+
+        <div class="form-group" style="margin-left: 120px;width: 700px">
+            <input type="text" id="carName" size="90px" class="form-control" placeholder="快速搜索">
+        </div>
+
+        <button type="button" onclick="searchUser()" class="btn btn-primary glyphicon glyphicon-search">  搜索</button>
+    </form>
+</nav>
+
+<div class="container">
+
+    <div class="row">
+        <span id="aaaId"></span>
+    </div>
+</div>
+
+</body>
+
+<script>
+
+    $(function () {
+
+        initCar();
+    })
+
+    //条查
+    function searchUser(){
+        var carName = $("#carName").val();
+
+        initCar(carName);
+    }
+
+    initCar = function (carName) {
+
+        if (carName != undefined){
+            $.ajax({
+                url:"../Car/queryCar?carName="+carName,
+                type:"GET",
+                success:function (data) {
+
+                    var Cartable = "";
+
+                    for (i = 0; i < data.rows.length; i++) {
+
+                        Cartable +=
+                            '<div class="col-md-3" id="rowaa">'+
+                            '<p></p>'+
+                            '<p></p>'+
+                            '<a>'+
+                            '<img src="'+data.rows[i].carImg+'" style="height:180px;width:100%;display: block">'+
+                            '</a>'+
+                            '<div class="caption">'+
+                            '<h3>'+data.rows[i].carName+'</h3>'+
+                            '<p>价格&nbsp;'+data.rows[i].carprice+ '￥</p>'+
+                            '<a  href="#" class="btn btn-primary">详情</a>'+
+                            '<a   class=""></a>'+
+                            '</div>'+
+                            '</div>'
+                    }
+
+                    $("#aaaId").html(Cartable)
+                }
+            })
+        }else if (carName == undefined) {
+
+            $.ajax({
+                url:"../Car/queryCar",
+                type:"GET",
+                success:function (data) {
+
+                    var Cartable = "";
+
+                    for (i = 0; i < data.rows.length; i++) {
+
+                        Cartable +=
+                            '<div class="col-md-3">'+
+                            '<p></p>'+
+                            '<p></p>'+
+                            '<a>'+
+                            '<img src="'+data.rows[i].carImg+'" style="height:180px;width:100%;display: block">'+
+                            '</a>'+
+                            '<div class="caption">'+
+                            '<h3>'+data.rows[i].carName+'</h3>'+
+                            '<p>价格&nbsp;'+data.rows[i].carprice+ '￥</p>'+
+                            '<a  href="#" class="btn btn-primary">详情</a>'+
+                            '<a   class=""></a>'+
+                            '</div>'+
+                            '</div>'
+                    }
+
+                    $("#aaaId").html(Cartable)
+                }
+            })
+        }
+    }
+    // initCar = function () {
+    //
+    //     $("#carTableId").bootstrapTable({
+    //         toolbar:'#toolbar',
+    //         url:"../Car/queryCar",
+    //         method:"GET",
+    //         contentType:'application/x-www-form-urlencoded',//post请求按照表单方式
+    //         pagination:true, //是否展示分页
+    //         sidePagination:'server',//分页方式：client客户端分页，server服务端分页
+    //         pageList:[2, 4, 6, 8],//分页组件
+    //         pageNumber:1,
+    //
+    //         pageSize:8,//默认每页条数
+    //         clickToSelect: true, //是否启用点击选中行
+    //         queryParams:function(){
+    //             var carName = $("#carName").val();
+    //             return{
+    //                 page:this.pageNumber,
+    //                 rows:this.pageSize,
+    //                 carName:carName,
+    //             }
+    //         },
+    //         columns:[
+    //             {field: 'checkbox', checkbox: true},  //开启复选框
+    //             /* {field: 'id',title: '标题',width:200}, */
+    //            /* {field: 'carId',title: 'ID',width:200},*/
+    //             {field: 'carImg',title: '图片',
+    //                 formatter: function (value,row,index){
+    //                     return "<img src='"+value+"' width='120px' height='80'>";
+    //                 },width:200},
+    //             {field: 'carName',title: '名称',width:200},
+    //             {field: 'carprice',title: '价格',width:200},
+    //
+    //             {field: 'XXX', title: '操作', width: 300,
+    //                 formatter: function (value,row,index){
+    //                     var content = "<a href='javascript:deletesc(\""+row.id+"\")'></a>"
+    //                     return content;
+    //                 }
+    //             }
+    //         ]
+    //     })
+    // }
+
+</script>
+
+</html>

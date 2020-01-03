@@ -1,0 +1,21 @@
+server:
+  port: 8082
+eureka:
+  client:
+    service-url:
+      #注册中心地址
+      defaultZone: http://localhost:8010/eureka
+spring:
+  application:
+    #服务在注册中心的名称 不同服务名称不能重复
+    name: cloud-provider
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/1906b?useUnicode=true&characterEncoding=utf-8
+    username: root
+mybatis:
+  config-locations: classpath:mapping/confg.xml
+  mapper-locations: classpath:mapping/mapper/*.xml
+  type-aliases-package: com.jk.model
+
